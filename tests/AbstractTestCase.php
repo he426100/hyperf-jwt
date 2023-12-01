@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace HyperfTest;
 
 use Carbon\Carbon;
-use Hyperf\Utils\ApplicationContext;
+use Hyperf\Context\ApplicationContext;
 use HyperfExt\Jwt\Claims\Factory;
 use HyperfExt\Jwt\Contracts\ManagerInterface;
 use HyperfExt\Jwt\ManagerFactory;

@@ -10,7 +10,7 @@ declare(strict_types=1);
  */
 namespace HyperfTest\Claims;
 
-use Hyperf\Utils\Contracts\Arrayable;
+use Hyperf\Contract\Arrayable;
 use HyperfExt\Jwt\Claims\Expiration;
 use HyperfTest\AbstractTestCase;
 

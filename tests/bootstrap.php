@@ -15,7 +15,7 @@ use Hyperf\Di\Container;
 use Hyperf\Di\Definition\DefinitionSourceFactory;
 use Hyperf\HttpMessage\Server\Request;
 use Hyperf\HttpServer\Request as HttpServerRequest;
-use Hyperf\Utils\ApplicationContext;
+use Hyperf\Context\ApplicationContext;
 use Hyperf\Context\Context;
 use HyperfExt\Jwt\Contracts\PayloadValidatorInterface;
 use HyperfExt\Jwt\Contracts\TokenValidatorInterface;

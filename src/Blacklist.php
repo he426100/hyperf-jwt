@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace HyperfExt\Jwt;
 
 use HyperfExt\Jwt\Contracts\StorageInterface;
+use function Hyperf\Support\value;
 
 class Blacklist
 {
