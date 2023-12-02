@@ -232,7 +232,7 @@ class Codec implements CodecInterface
 
         try {
             foreach ($payload as $key => $value) {
-                $this->addClaim($builder, $key, $value);
+                $builder = $this->addClaim($builder, $key, $value);
             }
             return $builder->getToken($this->config->signer(), $this->config->signingKey())->toString();
         } catch (Exception $e) {
@@ -283,35 +283,21 @@ class Codec implements CodecInterface
     /**
      * Adds a claim to the {@see $config}.
      *
-     * @param mixed $value
+     * @param Builder $value
      */
-    protected function addClaim(Builder $builder, string $key, $value)
+    protected function addClaim(Builder $builder, string $key, $value): Builder
     {
-        switch ($key) {
-            case RegisteredClaims::ID:
-                $builder->identifiedBy((string) $value);
-                break;
-            case RegisteredClaims::EXPIRATION_TIME:
-                $builder->expiresAt(\DateTimeImmutable::createFromFormat('U', (string) $value));
-                break;
-            case RegisteredClaims::NOT_BEFORE:
-                $builder->canOnlyBeUsedAfter(\DateTimeImmutable::createFromFormat('U', (string) $value));
-                break;
-            case RegisteredClaims::ISSUED_AT:
-                $builder->issuedAt(\DateTimeImmutable::createFromFormat('U', (string) $value));
-                break;
-            case RegisteredClaims::ISSUER:
-                $builder->issuedBy((string) $value);
-                break;
-            case RegisteredClaims::AUDIENCE:
-                $builder->permittedFor((string) $value);
-                break;
-            case RegisteredClaims::SUBJECT:
-                $builder->relatedTo((string) $value);
-                break;
-            default:
-                $builder->withClaim($key, $value);
-        }
+        $builder = match ($key) {
+            RegisteredClaims::ID => $builder->identifiedBy((string) $value),
+            RegisteredClaims::EXPIRATION_TIME => $builder->expiresAt(\DateTimeImmutable::createFromFormat('U', (string) $value)),
+            RegisteredClaims::NOT_BEFORE => $builder->canOnlyBeUsedAfter(\DateTimeImmutable::createFromFormat('U', (string) $value)),
+            RegisteredClaims::ISSUED_AT => $builder->issuedAt(\DateTimeImmutable::createFromFormat('U', (string) $value)),
+            RegisteredClaims::ISSUER => $builder->issuedBy((string) $value),
+            RegisteredClaims::AUDIENCE => $builder->permittedFor((string) $value),
+            RegisteredClaims::SUBJECT => $builder->relatedTo((string) $value),
+            default => $builder->withClaim($key, $value),
+        };
+        return $builder;
     }
 
     /**
